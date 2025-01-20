@@ -2,8 +2,8 @@ const User = require("../models/users.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-exports.authenticateJWT = (req, res, next) => { 
-  const token = req.headers["authentication"];
+exports.authenticateJWT = (req, res, next) => {
+  const token = req.headers["authorization"];
   console.log("Token :- ", token);
   if (!token) {
     return res.status(401).json({ message: "Access Denied." });
@@ -19,7 +19,7 @@ exports.authenticateJWT = (req, res, next) => {
   }
 };
 
-exports.registerNewUser = async (req, res) => {
+exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(400).json({ message: "All fields are required." });
