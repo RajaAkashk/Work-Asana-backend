@@ -19,7 +19,7 @@ const taskSchema = new mongoose.Schema({
   owners: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Userworkasan_user",
       required: true,
     },
   ], // Refers to User model (owners)
