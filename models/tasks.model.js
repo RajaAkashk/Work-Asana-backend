@@ -8,12 +8,12 @@ const taskSchema = new mongoose.Schema({
   },
   project: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Project",
+    ref: "projects",
     required: true,
   }, // Refers to Project model
   team: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Team",
+    ref: "teams",
     required: true,
   }, // Refers to Team model
   owners: [
