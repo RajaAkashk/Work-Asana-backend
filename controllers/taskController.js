@@ -13,9 +13,9 @@ exports.createTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
   try {
     const allTasks = await Task.find()
-      .populate("projects")
-      .populate("workasan_user")
-      .populate("teams");
+      .populate("project") // Correctly populate the `project` field
+      .populate("owners") // Correctly populate the `owners` field (workasan_user)
+      .populate("team"); // Correctly populate the `team` field
     res.status(200).json(allTasks);
   } catch (err) {
     res.status(400).json({ message: err.message });
