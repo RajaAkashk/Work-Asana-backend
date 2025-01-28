@@ -12,7 +12,10 @@ exports.createTask = async (req, res) => {
 
 exports.getTasks = async (req, res) => {
   try {
-    const allTasks = await Task.find().populate("project team owner");
+    const allTasks = await Task.find()
+      .populate("projects")
+      .populate("workasan_user")
+      .populate("teams");
     res.status(200).json(allTasks);
   } catch (err) {
     res.status(400).json({ message: err.message });
