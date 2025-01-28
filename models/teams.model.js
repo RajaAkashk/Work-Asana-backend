@@ -6,4 +6,4 @@ const teamSchema = new mongoose.Schema({
   // just added members
   members: [{ type: String, required: true }],
 });
-module.exports = mongoose.model("Team", teamSchema);
+module.exports = mongoose.model("teams", teamSchema);
