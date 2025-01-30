@@ -34,10 +34,8 @@ exports.getTasks = async (req, res) => {
 
   // Sorting by priority (mapping priority to numeric value for correct sorting)
   if (prioritySort === "Low-High") {
-    // Sorting by priority from Low to High (ascending)
     sortOptions.priority = 1; // Ascending order (Low -> Medium -> High)
   } else if (prioritySort === "High-Low") {
-    // Sorting by priority from High to Low (descending)
     sortOptions.priority = -1; // Descending order (High -> Medium -> Low)
   }
 

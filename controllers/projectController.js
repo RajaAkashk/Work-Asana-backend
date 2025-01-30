@@ -11,8 +11,17 @@ exports.createProject = async (req, res) => {
 };
 
 exports.allProject = async (req, res) => {
+  const { status } = req.query;
+  // Initialize filter object
+  let filter = {};
+
+  // If status is provided, filter by status
+  if (status) {
+    filter.status = status;
+  }
+
   try {
-    const project = await Project.find();
+    const project = await Project.find(filter);
     res.status(200).json(project);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -38,4 +47,3 @@ exports.deleteProject = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-
