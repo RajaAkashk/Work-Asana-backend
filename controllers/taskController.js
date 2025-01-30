@@ -1,4 +1,5 @@
 const Task = require("../models/tasks.model");
+const Team = require("../models/teams.model");
 
 exports.createTask = async (req, res) => {
   try {
@@ -11,12 +12,64 @@ exports.createTask = async (req, res) => {
 };
 
 exports.getTasks = async (req, res) => {
+  const { status, prioritySort, dateSort } = req.query;
+
+  // Initialize filter object
+  let filter = {};
+
+  // If status is provided, filter by status
+  if (status) {
+    filter.status = status;
+  }
+
+  // Initialize sorting options object
+  let sortOptions = {};
+
+  // Mapping for priority to numerical values
+  const priorityOrder = {
+    Low: 1,
+    Medium: 2,
+    High: 3,
+  };
+
+  // Sorting by priority (mapping priority to numeric value for correct sorting)
+  if (prioritySort === "Low-High") {
+    // Sorting by priority from Low to High (ascending)
+    sortOptions.priority = 1; // Ascending order (Low -> Medium -> High)
+  } else if (prioritySort === "High-Low") {
+    // Sorting by priority from High to Low (descending)
+    sortOptions.priority = -1; // Descending order (High -> Medium -> Low)
+  }
+
+  // Sorting by date
+  if (dateSort) {
+    if (dateSort === "Newest-Oldest") {
+      sortOptions.createdAt = -1; // Newest first
+    } else if (dateSort === "Oldest-Newest") {
+      sortOptions.createdAt = 1; // Oldest first
+    }
+  }
+
   try {
-    const allTasks = await Task.find()
-      .populate("project") // Correctly populate the `project` field
-      .populate("owners") // Correctly populate the `owners` field (workasan_user)
-      .populate("team"); // Correctly populate the `team` field
-    res.status(200).json(allTasks);
+    // Fetch tasks based on filter and sort options
+    const tasks = await Task.find(filter)
+      .sort(sortOptions)
+      .populate("project")
+      .populate("owners")
+      .populate("team");
+
+    // Sorting by priority manually if needed (in case of string-based priority)
+    if (prioritySort) {
+      tasks.sort((a, b) => {
+        const priorityA = priorityOrder[a.priority] || 0; // Convert to numeric priority
+        const priorityB = priorityOrder[b.priority] || 0; // Convert to numeric priority
+        return prioritySort === "Low-High"
+          ? priorityA - priorityB
+          : priorityB - priorityA;
+      });
+    }
+
+    res.status(200).json(tasks);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
