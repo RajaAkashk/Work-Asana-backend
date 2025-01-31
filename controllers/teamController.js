@@ -39,6 +39,27 @@ exports.updateTeam = async (req, res) => {
   }
 };
 
+exports.addTeamMember = async (req, res) => {
+  const { member } = req.body;
+  try {
+    const addMember = await Team.findByIdAndUpdate(
+      req.params.id,
+      { $push: { members: member } },
+      {
+        new: true,
+      }
+    );
+    if (!addMember) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+    res.status(200).json(addMember);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to add new member", error: err.message });
+  }
+};
+
 exports.deleteTeam = async (req, res) => {
   try {
     const deletedTeam = await Team.findByIdAndDelete(req.params.id);
