@@ -10,7 +10,6 @@ router.post("/register", UserController.registerUser);
 // User Login
 router.post("/login", UserController.loginUser);
 
-
 //User Profile
 router.get("/profile", authenticateJWT, async (req, res) => {
   try {
@@ -25,5 +24,7 @@ router.get("/profile", authenticateJWT, async (req, res) => {
       .json({ message: "Error in fetching user data.", error: err.message });
   }
 });
+
+router.get("/", UserController.getUsers);
 
 module.exports = router;
