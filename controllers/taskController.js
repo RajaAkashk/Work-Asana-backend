@@ -1,11 +1,11 @@
 const Task = require("../models/tasks.model");
-const Team = require("../models/teams.model");
 
 exports.createTask = async (req, res) => {
   try {
     const task = new Task(req.body);
     const savedTask = await task.save();
-    res.status(201).json({ savedTask });
+    const populatedTask = await Task.findById(savedTask._id).populate("owners");
+    res.status(201).json(populatedTask);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -87,7 +87,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     const deletedTask = await Task.findByIdAndDelete(req.params.id);
-    res.status(200).json(deletedTask);
+    res.status(200).json({ deletedTask });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
