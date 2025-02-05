@@ -5,7 +5,7 @@ exports.createTask = async (req, res) => {
   try {
     const task = new Task(req.body);
     const savedTask = await task.save();
-    res.status(201).json(savedTask);
+    res.status(201).json({ savedTask });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
