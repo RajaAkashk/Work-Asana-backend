@@ -30,9 +30,13 @@ exports.allProject = async (req, res) => {
 
 exports.updateProject = async (req, res) => {
   try {
-    const updatedProject = Project.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const updatedProject = await Project.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
     res.status(200).json({ updatedProject });
   } catch (err) {
     res.status(400).json({ message: err.message });
