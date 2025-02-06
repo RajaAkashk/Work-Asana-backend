@@ -37,7 +37,7 @@ exports.updateProject = async (req, res) => {
         new: true,
       }
     );
-    res.status(200).json({ updatedProject });
+    res.status(200).json(updatedProject);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -46,7 +46,7 @@ exports.updateProject = async (req, res) => {
 exports.deleteProject = async (req, res) => {
   try {
     const deletedProject = await Project.findByIdAndDelete(req.params.id);
-    res.status(200).json({ deletedProject });
+    res.status(200).json(deletedProject);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
