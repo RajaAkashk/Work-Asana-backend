@@ -43,6 +43,15 @@ exports.updateProject = async (req, res) => {
   }
 };
 
+exports.getProjectById = async (req, res) => {
+  try {
+    const projectById = await Project.findById(req.params.id);
+    res.status(200).json(projectById);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.deleteProject = async (req, res) => {
   try {
     const deletedProject = await Project.findByIdAndDelete(req.params.id);
