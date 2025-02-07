@@ -11,6 +11,15 @@ exports.createTask = async (req, res) => {
   }
 };
 
+exports.getTaskById = async (req, res) => {
+  try {
+    const taskById = await Task.findById(req.params.id);
+    res.status(200).json(taskById);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getTasks = async (req, res) => {
   const { status, prioritySort, dateSort } = req.query;
 
