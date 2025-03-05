@@ -43,14 +43,6 @@ const taskSchema = new mongoose.Schema(
       default: "Low",
       enum: ["Low", "Medium", "High"],
     },
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now,
-    // },
-    // updatedAt: {
-    //   type: Date,
-    //   default: Date.now,
-    // }, NO need for it
   },
   { timestamps: true }
 );
