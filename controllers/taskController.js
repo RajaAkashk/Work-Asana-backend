@@ -68,7 +68,7 @@ exports.getTasks = async (req, res) => {
       .populate("owners")
       .populate("team");
 
-    // Sorting by priority manually if needed (in case of string-based priority)
+    // Sorting by priority manually if needed
     if (prioritySort) {
       tasks.sort((a, b) => {
         const priorityA = priorityOrder[a.priority] || 0; // Convert to numeric priority
