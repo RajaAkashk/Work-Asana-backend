@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const { intializeDatabse } = require("./config/db.connect");
+const { intializeDatabase } = require("./config/db.connect");
 const dotenv = require("dotenv");
 
 dotenv.config();
-intializeDatabse();
+intializeDatabase();
 
 const app = express();
 const corsOptions = {
